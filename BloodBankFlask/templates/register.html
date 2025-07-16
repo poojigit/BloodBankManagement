@@ -1,0 +1,69 @@
+<!-- templates/register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function toggleBloodGroup(role) {
+            const section = document.getElementById('bloodGroupSection');
+            section.style.display = (role === 'Donor') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register</h2>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="text" name="phone" placeholder="Phone Number" required pattern="\d{10}">
+            <input type="text" name="whatsapp" placeholder="WhatsApp Number" required pattern="\d{10,13}">
+            <input type="password" name="password" placeholder="Password" required>
+
+            <label>Role:</label>
+            <select name="role" required onchange="toggleBloodGroup(this.value)">
+                <option value="donor">Donor</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <div id="blood-group-field">
+    <label for="blood_group">Blood Group:</label>
+    <select name="blood_group" required>
+        <option value="">--Select--</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+    </select>
+</div>
+
+
+<script>
+        const roleSelect = document.querySelector('select[name="role"]');
+        const bloodGroupField = document.getElementById('blood-group-field');
+
+        roleSelect.addEventListener('change', function () {
+            if (this.value.toLowerCase() === 'donor') {
+                bloodGroupField.style.display = 'block';
+            } else {
+                bloodGroupField.style.display = 'none';
+            }
+        });
+
+        window.onload = () => {
+            if (roleSelect.value.toLowerCase() !== 'donor') {
+                bloodGroupField.style.display = 'none';
+            }
+        };
+    </script>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>

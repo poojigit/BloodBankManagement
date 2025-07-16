@@ -1,0 +1,60 @@
+<!-- templates/donor_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donor Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-donor {
+            background-color: #bb377d;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn-donor:hover {
+            background-color: #a62d6c;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Welcome, {{ user[1] }}</h2>
+
+        <p><strong>Email:</strong> <a href="mailto:{{ user[2] }}">{{ user[2] }}</a></p>
+        <p><strong>Phone:</strong> <a href="tel:{{ user[6] }}">{{ user[6] }}</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/{{ user[7] }}" target="_blank">Chat on WhatsApp</a></p>
+        <p><strong>Blood Group:</strong> {{ user[5] }}</p>
+
+        <div class="button-group">
+            <a class="btn-donor" href="/">🔒 Logout</a>
+
+            <form method="POST" action="/delete_account" onsubmit="return confirm('Are you sure you want to delete your account permanently?');">
+                <button type="submit" class="btn-donor btn-delete">🗑️ Delete My Account</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

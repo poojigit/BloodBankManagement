@@ -1,0 +1,119 @@
+<!-- templates/admin_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .form-container {
+            background: #fff;
+            padding: 40px;
+            margin: 60px auto;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #bb377d;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-weight: bold;
+            background-color: #bb377d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+
+        .btn:hover {
+            background-color: #a62d6c;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .table-title {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #444;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>🛡️ Welcome, {{ admin[1] }}</h2>
+
+        <div class="table-title">🩸 Blood Stock Summary</div>
+        <table>
+            <tr>
+                <th>Blood Group</th>
+                <th>Units Available</th>
+            </tr>
+            {% for row in stock %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="table-title">👥 Registered Donors</div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>WhatsApp</th>
+                <th>Blood Group</th>
+                <th>Action</th>
+            </tr>
+            {% for donor in donors %}
+            <tr>
+                <td>{{ donor[0] }}</td>
+                <td>{{ donor[1] }}</td>
+                <td><a href="mailto:{{ donor[2] }}">{{ donor[2] }}</a></td>
+                <td><a href="tel:{{ donor[6] }}">{{ donor[6] }}</a></td>
+                <td><a href="https://wa.me/{{ donor[7] }}" target="_blank">WhatsApp</a></td>
+                <td>{{ donor[5] }}</td>
+                <td>
+                    <form method="POST" action="/delete/{{ donor[0] }}" onsubmit="return confirm('Delete this donor?');">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a class="btn" href="/">🔒 Logout</a>
+    </div>
+</body>
+</html>
